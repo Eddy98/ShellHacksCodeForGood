@@ -22,23 +22,19 @@ export default class Register extends Component {
                 </Form.Field>
                 <Form.Field>
                   <label>First Name</label>
-                  <input placeholder='email@gmail.com' type='text' required />
+                  <input placeholder='First name' type='text' required />
                 </Form.Field>
                 <Form.Field>
                   <label>Last Name</label>
-                  <input placeholder='password' type='text' required />
+                  <input placeholder='Last name' type='text' required />
                 </Form.Field>
                 <Form.Field>
                   <label>Phone</label>
-                  <input placeholder='email@gmail.com' type='text' required />
+                  <input placeholder='888-999-9990' type='number' required />
                 </Form.Field>
                 <Form.Field>
                   <label>Password</label>
-                  <input
-                    placeholder='email@gmail.com'
-                    type='password'
-                    required
-                  />
+                  <input type='password' required />
                 </Form.Field>
                 <div className='p1'>
                   <small>
