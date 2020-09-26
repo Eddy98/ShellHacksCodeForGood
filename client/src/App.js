@@ -1,6 +1,13 @@
-import React from 'react';
+import React, {Component} from 'react';
+import {
+  Route,
+  BrowserRouter as Router,
+  Switch,
+  Redirect
+} from 'react-router-dom'
 import logo from './logo.svg';
 import './App.css';
+import 'semantic-ui-css/semantic.min.css'
 
 function App() {
   return (
