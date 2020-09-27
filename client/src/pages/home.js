@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Card, CardGroup } from 'semantic-ui-react';
+import { Card, CardGroup, Container, Divider, Grid, Header, Segment } from 'semantic-ui-react';
 import EventCard from "../components/EventCard"
+import EventSignUpModal from "../components/EventSignUpModal"
 
 export default class Home extends Component {
     constructor() {
@@ -15,43 +16,75 @@ export default class Home extends Component {
 
     toogleEventView(event) {
         this.setState(state => ({
-            ...state, event_view: !state.event_view
+            ...state,
+            event_view: !state.event_view,
+            selected_event: event
         }));
     }
     toogleEventSignUp(event) {
         this.setState(state => ({
-            ...state, event_signup: !state.event_signup
+            ...state, 
+            event_signup: !state.event_signup,
+            selected_event: event
         }));
     }
-
     render() {
+        const {event_signup, selected_event} = this.state
+
+        const events = [
+            {
+                 orgName:"Red Cross",
+                 eventName:"Blood Donation",
+                 description:"An event where you donate blood, que mas tu quieres"
+             },
+             {
+                 orgName:"Red Cross",
+                 eventName:"Blood Donation",
+                 description:"An event where you donate blood, que mas tu quieres"
+             },
+             {
+                 orgName:"Red Cross",
+                 eventName:"Blood Donation",
+                 description:"An event where you donate blood, que mas tu quieres"
+             }
+         ]
+
+         console.log(events)
         return (
             <>
-                <Card.Group
-                itemsPerRow={3}>
-                    <EventCard
-                        signUp={() => this.toogleEventSignUp({})}
-                        viewInfo={() => this.toogleEventView({})}
-                        orgName="Red Cross"
-                        eventName="Blood Donation"
-                        description="An event where you donate blood, que mas tu quieres"
-                    />
-                    <EventCard
-                        orgName="Red Cross"
-                        eventName="Blood Donation"
-                        description="An event where you donate blood, que mas tu quieres"
-                    />
-                    <EventCard
-                        orgName="Red Cross"
-                        eventName="Blood Donation"
-                        description="An event where you donate blood, que mas tu quieres"
-                    />
-                    <EventCard
-                        orgName="Red Cross"
-                        eventName="Blood Donation"
-                        description="An event where you donate blood, que mas tu quieres"
-                    />
-                </Card.Group>
+            <Container>
+                <Header as="h1">
+                    Events Near you
+                </Header>
+                <Divider/>
+                <Grid textAlign="left">
+                    <Grid.Row verticalAlign="middle">
+                        <Grid.Column verticalAlign="middle">
+                            <Card.Group
+                                centered
+                                itemsPerRow={3}>
+                                { events && events.map((event, index) => {
+                                    return (
+                                    <EventCard
+                                        orgName={event.orgName}
+                                        description={event.description}
+                                        signUp={()=>this.toogleEventSignUp(event)}
+                                        viewInfo={()=>this.toogleEventView(event)}
+                                        eventName={event.eventName}
+                                        key={index}
+                                    />
+                                )})
+                                }
+                            </Card.Group>
+                        </Grid.Column>
+                    </Grid.Row>
+                </Grid>
+            </Container>
+            <EventSignUpModal
+                isOpen={event_signup}
+                onClose={()=>this.toogleEventSignUp({})}
+                event={selected_event}
+            />
             </>
         );
     }
