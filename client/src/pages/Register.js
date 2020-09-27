@@ -9,8 +9,8 @@ export default class Register extends Component {
     const { email, firstName, lastName, phone, password } = e.target.elements
 
     try {
-      await firebase.register(firstName.value, email.value, password.value)
-      await firebase.addQuote('Alberto is a bitch')
+      await firebase.register(email.value, firstName.value, lastName.value, phone.value, password.value)
+      this.props.loginEvent()
       this.props.history.replace('/')
     } catch (error) {
       alert(error.message)
@@ -43,7 +43,7 @@ export default class Register extends Component {
                 </Form.Field>
                 <Form.Field>
                   <label>Phone</label>
-                  <input placeholder='888-999-9990' type='text' required name="phone" />
+                  <input placeholder='888-999-9990' type='number' required name="phone" />
                 </Form.Field>
                 <Form.Field>
                   <label>Password</label>
