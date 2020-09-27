@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Button, Card } from "semantic-ui-react";
 
-const EventCard = ({ orgName, eventName, description }) => {
+const EventCard = ({ orgName, eventName, description, signUp, viewInfo }) => {
   return (
     <>
       <Card color="green">
@@ -13,12 +13,14 @@ const EventCard = ({ orgName, eventName, description }) => {
         <Card.Content extra>
           <Button
             floated="right"
+            onClick={viewInfo}
             icon="info"
             color="blue"
             labelPosition="left"
             content="View"
           />
           <Button
+            onClick={signUp}
             floated="right"
             color="green"
             icon="signup"
