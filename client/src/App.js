@@ -15,15 +15,35 @@ import Header from './components/Header'
 import Login from './components/pages/Login'
 import Register from './components/pages/Register'
 
+import firebase from './firebase'
 
 class App extends Component {
+  state = {
+    isInitialized: false,
+    userEmail: '',
+  }
+
+  componentDidMount() {
+    firebase.isInitialized().then((val) => {
+      this.setState({ isInitialized: true })
+    })
+  }
+
+  loginEvent = () => {
+    this.setState({userEmail: firebase.getCurrentUsername() })
+  }
+
+  // componentDidUpdate() {
+  //   this.setState({ userEmail: firebase.getCurrentUsername })
+  // }
+
   render() {
-    return (
+    return this.state.isInitialized ? (
       <div className='App'>
         <Router>
-          <Header />
+          <Header userEmail={this.state.userEmail} loginEvent={this.loginEvent}/>
           <Switch>
-            <Route exact path='/login' component={Login} />
+            <Route exact path='/login' component={(props) => <Login {...props} loginEvent={this.loginEvent}/>} />
             <Route exact path='/register' component={Register} />
             <Route>
               <Redirect to='/' />
@@ -31,6 +51,8 @@ class App extends Component {
           </Switch>
         </Router>
       </div>
+    ) : (
+      <div>Loading</div>
     )
   }
 }
