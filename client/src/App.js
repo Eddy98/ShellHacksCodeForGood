@@ -42,13 +42,14 @@ class App extends Component {
   // }
 
   render() {
+    // console.log(firebase.getCurrentUserInfo());
     return this.state.isInitialized ? (
       <div className='App'>
         <Router>
           <Header userEmail={this.state.userEmail} loginEvent={this.loginEvent}/>
           <Switch>
             <Route exact path='/login' component={(props) => <Login {...props} loginEvent={this.loginEvent}/>} />
-            <Route exact path='/register' component={Register} />
+            <Route exact path='/register' component={(props) => <Register {...props} loginEvent={this.loginEvent}/>} />
             <Route exact path='/' component={Home} />
             <Route>
               <Redirect to='/' />

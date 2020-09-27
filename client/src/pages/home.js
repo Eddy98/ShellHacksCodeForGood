@@ -2,16 +2,27 @@ import React, { Component } from 'react';
 import { Card, CardGroup, Container, Divider, Grid, Header, Segment } from 'semantic-ui-react';
 import EventCard from "../components/EventCard"
 import EventSignUpModal from "../components/EventSignUpModal"
+import React, { Component } from 'react'
+import { Card, CardGroup, Button } from 'semantic-ui-react'
+import EventCard from '../components/EventCard'
+
+import firebase from '../firebase'
 
 export default class Home extends Component {
-    constructor() {
-        super();
-        this.state = {
-            event_view: false,
-            event_signup:false,
-            selected_event: null
-        };
-        this.toogleEventView = this.toogleEventView.bind(this)
+  constructor() {
+    super()
+    this.state = {
+      event_view: false,
+      event_signup: false,
+      events: [],
+      selected_event: null,
+    }
+    this.toogleEventView = this.toogleEventView.bind(this)
+  }
+
+    componentDidMount(){
+        const events = await firebase.getEvents();
+        this.setState(state=>({...this.state,events:events}))
     }
 
     toogleEventView(event) {
@@ -29,27 +40,25 @@ export default class Home extends Component {
         }));
     }
     render() {
-        const {event_signup, selected_event} = this.state
+        const {event_signup, selected_event, events} = this.state
+        // const events = [
+        //     {
+        //          orgName:"Red Cross",
+        //          eventName:"Blood Donation",
+        //          description:"An event where you donate blood, que mas tu quieres"
+        //      },
+        //      {
+        //          orgName:"Red Cross",
+        //          eventName:"Blood Donation",
+        //          description:"An event where you donate blood, que mas tu quieres"
+        //      },
+        //      {
+        //          orgName:"Red Cross",
+        //          eventName:"Blood Donation",
+        //          description:"An event where you donate blood, que mas tu quieres"
+        //      }
+        //  ]
 
-        const events = [
-            {
-                 orgName:"Red Cross",
-                 eventName:"Blood Donation",
-                 description:"An event where you donate blood, que mas tu quieres"
-             },
-             {
-                 orgName:"Red Cross",
-                 eventName:"Blood Donation",
-                 description:"An event where you donate blood, que mas tu quieres"
-             },
-             {
-                 orgName:"Red Cross",
-                 eventName:"Blood Donation",
-                 description:"An event where you donate blood, que mas tu quieres"
-             }
-         ]
-
-         console.log(events)
         return (
             <>
             <Container>

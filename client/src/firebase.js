@@ -3,65 +3,83 @@ import 'firebase/auth'
 import 'firebase/firebase-firestore'
 
 const firebaseConfig = {
-    apiKey: 'AIzaSyAAgUtOHGKz2pyRiA8suOqgHmxxC-vyTVY',
-    authDomain: 'shellhackscodeforgood.firebaseapp.com',
-    databaseURL: 'https://shellhackscodeforgood.firebaseio.com',
-    projectId: 'shellhackscodeforgood',
-    storageBucket: 'shellhackscodeforgood.appspot.com',
-    messagingSenderId: '798089780581',
-    appId: '1:798089780581:web:22c37dde2f77122445d58c',
-    measurementId: 'G-NJJZQLP8P4',
-  }
+  apiKey: 'AIzaSyAAgUtOHGKz2pyRiA8suOqgHmxxC-vyTVY',
+  authDomain: 'shellhackscodeforgood.firebaseapp.com',
+  databaseURL: 'https://shellhackscodeforgood.firebaseio.com',
+  projectId: 'shellhackscodeforgood',
+  storageBucket: 'shellhackscodeforgood.appspot.com',
+  messagingSenderId: '798089780581',
+  appId: '1:798089780581:web:22c37dde2f77122445d58c',
+  measurementId: 'G-NJJZQLP8P4',
+}
 
 class Firebase {
-	constructor() {
-		app.initializeApp(firebaseConfig)
-		this.auth = app.auth()
-		this.db = app.firestore()
-	}
+  constructor() {
+    app.initializeApp(firebaseConfig)
+    this.auth = app.auth()
+    this.db = app.firestore()
+  }
 
-	login(email, password) {
-		return this.auth.signInWithEmailAndPassword(email, password)
-	}
+  //AUTHENTICATION
+  login(email, password) {
+    return this.auth.signInWithEmailAndPassword(email, password)
+  }
+  logout() {
+    return this.auth.signOut()
+  }
+  async register(email, firstName, lastName, phone, password) {
+    await this.auth.createUserWithEmailAndPassword(email, password)
+    await this.db
+      .doc(`users/${this.auth.currentUser.uid}`)
+      .set({ firstName, lastName, phone })
+    return this.auth.currentUser.updateProfile({
+      displayName: firstName,
+      phoneNumber: phone,
+    })
+  }
+  isInitialized() {
+    return new Promise((resolve) => {
+      this.auth.onAuthStateChanged(resolve)
+    })
+  }
+  getCurrentUsername() {
+    if (this.auth.currentUser) return this.auth.currentUser.email
+    else return ''
+  }
+  async getCurrentUserInfo() {
+    const info = await this.db.doc(`users/${this.auth.currentUser.uid}`).get()
 
-	logout() {
-		return this.auth.signOut()
-	}
+    return {
+      firstName: info.get('firstName'),
+      lastName: info.get('lastName'),
+      phone: info.get('phone'),
+      email: this.auth.currentUser.email,
+    }
+  }
 
-	async register(name, email, password) {
-		await this.auth.createUserWithEmailAndPassword(email, password)
-		return this.auth.currentUser.updateProfile({
-			displayName: email
-		})
-	}
+  //POST EVENTS
+  addEventToUser(event) {
+    if (!this.auth.currentUser) {
+      return alert('Not authorized')
+    }
 
-	addQuote(quote) {
-		if(!this.auth.currentUser) {
-			return alert('Not authorized')
-		}
+    return this.db
+      .doc(`users/${this.auth.currentUser.uid}`)
+      .update({ events: app.firestore.FieldValue.arrayUnion({ ...event }) })
+  }
+  addEvent(event) {
+    return this.db.collection('events').add(event)
+  }
 
-		return this.db.doc(`users/${this.auth.currentUser.uid}`).set({
-			quote
-		})
-	}
-
-	isInitialized() {
-		return new Promise(resolve => {
-			this.auth.onAuthStateChanged(resolve)
-		})
-	}
-
-	getCurrentUsername() {
-        if (this.auth.currentUser)
-            return this.auth.currentUser.displayName
-        else 
-            return ""
-	}
-
-	async getCurrentUserQuote() {
-		const quote = await this.db.doc(`users_codedamn_video/${this.auth.currentUser.uid}`).get()
-		return quote.get('quote')
-	}
+  //QUERIES
+  async getEvents() {
+    const events = await this.db.collection('events').get()
+    let obj = []
+    events.forEach(doc => {
+        obj.push({ ...doc.data(), id: doc.id })
+    })
+    return obj
+  }
 }
 
 export default new Firebase()
