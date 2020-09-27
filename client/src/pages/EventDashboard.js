@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
 import { Button, Card, CardGroup, Container, Divider, Grid, Header, Segment } from 'semantic-ui-react';
 import EventCard from "../components/EventCard"
-import EventSignUpModal from "../components/EventSignUpModal"
+import NewEventModal from "../components/NewEventModal"
 
 export default class EventDashboard extends Component {
     constructor() {
         super();
         this.state = {
-            event_checkIn:false,
+            event_checkIn: false,
             event_create: false,
             selected_event: null
         };
-        this.toogleEventCreate = this.toogleEventCreate.bind(this)
+        this.toggleEventCreate = this.toggleEventCreate.bind(this)
     }
 
     toggleEventCreate() {
@@ -20,7 +20,7 @@ export default class EventDashboard extends Component {
             event_create: !state.event_create,
         }));
     }
-    toogleEventCreate(event) {
+    toogleEventCheckIn(event) {
         this.setState(state => ({
             ...state, 
             event_signup: !state.event_signup,
@@ -28,8 +28,8 @@ export default class EventDashboard extends Component {
         }));
     }
     render() {
-        const {event_checkIn: event_signup, selected_event} = this.state
-
+        const {event_create} = this.state
+        
         const events = [
             {
                  orgName:"Red Cross",
@@ -57,6 +57,7 @@ export default class EventDashboard extends Component {
                 </Header>
                 <Divider/>
                 <Button
+                    onClick={()=>this.toggleEventCreate()}
                     floated="right"
                     content="Add Event"
                 />
@@ -81,10 +82,9 @@ export default class EventDashboard extends Component {
                     </Grid.Row>
                 </Grid>
             </Container>
-            <EventSignUpModal
-                isOpen={event_signup}
-                onClose={()=>this.toogleEventCheckIn({})}
-                event={selected_event}
+            <NewEventModal
+                isOpen={event_create}
+                onClose={()=>this.toggleEventCreate({})}
             />
             </>
         );

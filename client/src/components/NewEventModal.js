@@ -18,26 +18,15 @@ export default class NewEventModal extends Component {
   }
 
   render() {
-    const { isOpen, onClose, event } = this.props;
-    const {phone} = this.state
-    if (!event) {
-      return <></>;
-    }
-    const {eventName, orgName, description} = event;
-
+    const { isOpen, onClose} = this.props;
     return (
       <Modal 
         open={isOpen} 
         onClose={onClose}
         size="tiny"
       >
-        <Modal.Header>{eventName}</Modal.Header>
+        <Modal.Header>New Event</Modal.Header>
         <Modal.Content>
-          <Modal.Description>
-            <Header as="h5">{orgName}</Header>
-            <p>{description}</p>
-          </Modal.Description>
-          <Divider/>
           <Form>
             <Form.Group>
               <Form.Input
@@ -62,7 +51,6 @@ export default class NewEventModal extends Component {
               <Form.Input
                 label="Phone Number"
                 name="phone"
-                value={phone}
                 required
                 onChange={(event,{name,value})=>{
                   if(!isNaN(value)) {
