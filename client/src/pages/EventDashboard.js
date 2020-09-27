@@ -8,19 +8,19 @@ export default class EventDashboard extends Component {
         super();
         this.state = {
             event_checkIn:false,
+            event_create: false,
             selected_event: null
         };
-        this.toogleEventView = this.toogleEventView.bind(this)
+        this.toogleEventCreate = this.toogleEventCreate.bind(this)
     }
 
-    toogleEventView(event) {
+    toggleEventCreate() {
         this.setState(state => ({
             ...state,
-            event_view: !state.event_view,
-            selected_event: event
+            event_create: !state.event_create,
         }));
     }
-    toogleEventCheckIn(event) {
+    toogleEventCreate(event) {
         this.setState(state => ({
             ...state, 
             event_signup: !state.event_signup,
@@ -56,8 +56,10 @@ export default class EventDashboard extends Component {
                     Current Events
                 </Header>
                 <Divider/>
-                <Button/>
-                <Divider/>
+                <Button
+                    floated="right"
+                    content="Add Event"
+                />
                 <Grid textAlign="left">
                     <Grid.Row verticalAlign="middle">
                         <Grid.Column verticalAlign="middle">
@@ -69,8 +71,6 @@ export default class EventDashboard extends Component {
                                     <EventCard
                                         orgName={event.orgName}
                                         description={event.description}
-                                        signUp={()=>this.toogleEventCheckIn(event)}
-                                        viewInfo={()=>this.toogleEventView(event)}
                                         eventName={event.eventName}
                                         key={index}
                                     />

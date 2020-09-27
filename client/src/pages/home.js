@@ -2,9 +2,6 @@ import React, { Component } from 'react';
 import { Card, CardGroup, Container, Divider, Grid, Header, Segment } from 'semantic-ui-react';
 import EventCard from "../components/EventCard"
 import EventSignUpModal from "../components/EventSignUpModal"
-import React, { Component } from 'react'
-import { Card, CardGroup, Button } from 'semantic-ui-react'
-import EventCard from '../components/EventCard'
 
 import firebase from '../firebase'
 
@@ -20,7 +17,7 @@ export default class Home extends Component {
     this.toogleEventView = this.toogleEventView.bind(this)
   }
 
-    componentDidMount(){
+    async componentDidMount(){
         const events = await firebase.getEvents();
         this.setState(state=>({...this.state,events:events}))
     }
