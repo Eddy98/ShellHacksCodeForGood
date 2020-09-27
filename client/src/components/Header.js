@@ -32,10 +32,15 @@ export default function Header(props) {
               onClick={handleItemClick}
             />
           ) : (
-            <Dropdown pointing item className='email' text={firebase.getCurrentUsername()}>
+            <Dropdown
+              pointing
+              item
+              className='email'
+              text={firebase.getCurrentUsername()}
+            >
               <Dropdown.Menu>
                 <Dropdown.Item as={Link} to='/history'>
-                    My History
+                  My History
                 </Dropdown.Item>
                 <Dropdown.Divider />
                 <Dropdown.Item onClick={logout}>
