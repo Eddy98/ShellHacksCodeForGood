@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Card, Modal, Image } from "semantic-ui-react";
+import { Button, Card, Modal, Image, Header, Grid } from "semantic-ui-react";
 
 export default class EventSignUpModal extends Component {
   constructor(props) {
@@ -10,16 +10,23 @@ export default class EventSignUpModal extends Component {
   render() {
     const { isOpen, onClose } = this.props;
     return (
-      <Modal open={isOpen} onClose={onClose}>
-        <Modal.Header>Upload image</Modal.Header>
+      <Modal 
+        open={isOpen} 
+        onClose={onClose}
+      >
+        <Modal.Header>eventName</Modal.Header>
         <Modal.Content image>
-          <Image
-            size="medium"
-            src="/images/wireframe/image-square.png"
-            wrapped
-          />
+          <Header>orgName</Header>
           <Modal.Description>
-            <p>Would you like to upload this image?</p>
+            <Grid>
+              <Grid.Row>
+                <Grid.Column>
+                  <p>description</p>
+                </Grid.Column>
+                <Grid.Column>
+                </Grid.Column>
+              </Grid.Row>
+            </Grid>
           </Modal.Description>
         </Modal.Content>
         <Modal.Actions>
