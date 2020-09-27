@@ -13,7 +13,7 @@ export default function Header(props) {
 
   const handleItemClick = (e, { name }) => setActiveItem(name)
   return (
-    <div>
+    <>
       <Menu pointing secondary>
         <Menu.Item
           as={Link}
@@ -51,6 +51,6 @@ export default function Header(props) {
           )}
         </Menu.Menu>
       </Menu>
-    </div>
+    </>
   )
 }

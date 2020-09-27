@@ -16,6 +16,7 @@ import Header from './components/Header'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import Home from './pages/Home'
+import EventDashboard from './pages/EventDashboard'
 
 
 import firebase from './firebase'
@@ -49,7 +50,7 @@ class App extends Component {
           <Switch>
             <Route exact path='/login' component={(props) => <Login {...props} loginEvent={this.loginEvent}/>} />
             <Route exact path='/register' component={(props) => <Register {...props} loginEvent={this.loginEvent}/>} />
-            <Route exact path='/' component={Home} />
+            <Route exact path='/' component={EventDashboard} />
             <Route>
               <Redirect to='/' />
             </Route>

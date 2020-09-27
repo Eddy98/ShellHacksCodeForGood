@@ -1,15 +1,14 @@
 import React, { Component } from "react";
 import { Button, Card, Modal, Image, Header, Grid, Form, Divider } from "semantic-ui-react";
 
-export default class EventSignUpModal extends Component {
+export default class NewEventModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      firstName: "",
-      lastName: "",
-      email: "",
-      phone: "",
-      times: []
+      eventName: "",
+      orgName: "",
+      description: "",
+      timeSlots: []
     };
     this.onChange = this.onChange.bind(this)
   }
@@ -19,26 +18,15 @@ export default class EventSignUpModal extends Component {
   }
 
   render() {
-    const { isOpen, onClose, event } = this.props;
-    const {phone} = this.state
-    if (!event) {
-      return <></>;
-    }
-    const {eventName, orgName, description} = event;
-
+    const { isOpen, onClose} = this.props;
     return (
       <Modal 
         open={isOpen} 
         onClose={onClose}
         size="tiny"
       >
-        <Modal.Header>{eventName}</Modal.Header>
+        <Modal.Header>New Event</Modal.Header>
         <Modal.Content>
-          <Modal.Description>
-            <Header as="h5">{orgName}</Header>
-            <p>{description}</p>
-          </Modal.Description>
-          <Divider/>
           <Form>
             <Form.Group>
               <Form.Input
@@ -63,7 +51,6 @@ export default class EventSignUpModal extends Component {
               <Form.Input
                 label="Phone Number"
                 name="phone"
-                value={phone}
                 required
                 onChange={(event,{name,value})=>{
                   if(!isNaN(value)) {
