@@ -70,13 +70,25 @@ class Firebase {
   addEvent(event) {
     return this.db.collection('events').add(event)
   }
+  getEventById(eventID) {
+    const e = this.db
+      .doc(`events/${eventID}`)
+      .get()
+      .then((doc) => {
+        return doc.data()
+      })
+    return e
+  }
+  async addUserToEvent(eventID, user) {
+    await this.db.doc(`events/${eventID}`).update({ users: app.firestore.FieldValue.arrayUnion({ ...user }) })
+  }
 
   //QUERIES
   async getEvents() {
     const events = await this.db.collection('events').get()
     let obj = []
-    events.forEach(doc => {
-        obj.push({ ...doc.data(), id: doc.id })
+    events.forEach((doc) => {
+      obj.push({ ...doc.data(), id: doc.id })
     })
     return obj
   }

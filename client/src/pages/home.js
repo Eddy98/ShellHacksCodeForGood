@@ -37,7 +37,10 @@ export default class Home extends Component {
     //     timeSlots: [ {startTime: 9, endTime: 10}, {startTime: 10, endTime: 11} ]
     //   })
     console.log(
-        firebase.getEvents()
+      firebase.addUserToEvent('EMsNwFnRQP3MaWTAy4v5', {
+        test: 'test',
+        idk: 'idk',
+      })
     )
   }
 
