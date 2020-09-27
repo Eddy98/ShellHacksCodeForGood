@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Form, Grid, Button } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 
-import firebase from '../../firebase'
+import firebase from '../firebase'
 
 export default class Register extends Component {
   onRegister = async (e) => {

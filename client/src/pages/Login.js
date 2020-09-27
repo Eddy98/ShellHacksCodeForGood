@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Grid, Container, Form, Checkbox, Button } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 
-import firebase from '../../firebase'
+import firebase from '../firebase'
 
 export default class Login extends Component {
   login = async (e) => {

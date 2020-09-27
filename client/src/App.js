@@ -12,8 +12,11 @@ import * as db from 'firebase'
 import user_util from './util/user.util'
 
 import Header from './components/Header'
-import Login from './components/pages/Login'
-import Register from './components/pages/Register'
+
+import Login from './pages/Login'
+import Register from './pages/Register'
+import Home from './pages/Home'
+
 
 import firebase from './firebase'
 
@@ -45,6 +48,7 @@ class App extends Component {
           <Switch>
             <Route exact path='/login' component={(props) => <Login {...props} loginEvent={this.loginEvent}/>} />
             <Route exact path='/register' component={Register} />
+            <Route exact path='/' component={Home} />
             <Route>
               <Redirect to='/' />
             </Route>
