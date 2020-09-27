@@ -30,7 +30,15 @@ export default class Home extends Component {
 
   test = () => {
     // firebase.addEvent({ id: "3", hours: 3 })
-    console.log(firebase.getCurrentUserInfo())
+    // firebase.addEvent({
+    //     orgName: 'Red Cross',
+    //     eventName: 'Blood Donation',
+    //     users: [],
+    //     timeSlots: [ {startTime: 9, endTime: 10}, {startTime: 10, endTime: 11} ]
+    //   })
+    console.log(
+        firebase.getEvents()
+    )
   }
 
   render() {

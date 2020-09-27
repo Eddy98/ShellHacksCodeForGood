@@ -20,14 +20,13 @@ class Firebase {
     this.db = app.firestore()
   }
 
+  //AUTHENTICATION
   login(email, password) {
     return this.auth.signInWithEmailAndPassword(email, password)
   }
-
   logout() {
     return this.auth.signOut()
   }
-
   async register(email, firstName, lastName, phone, password) {
     await this.auth.createUserWithEmailAndPassword(email, password)
     await this.db
@@ -38,38 +37,15 @@ class Firebase {
       phoneNumber: phone,
     })
   }
-
-  addQuote(quote) {
-    if (!this.auth.currentUser) {
-      return alert('Not authorized')
-    }
-
-    return this.db.doc(`users/${this.auth.currentUser.uid}`).set({
-      quote,
-    })
-  }
-
-  addEvent(event) {
-    if (!this.auth.currentUser) {
-      return alert('Not authorized')
-    }
-
-    return this.db
-      .doc(`users/${this.auth.currentUser.uid}`)
-      .update({ events: app.firestore.FieldValue.arrayUnion({ ...event }) })
-  }
-
   isInitialized() {
     return new Promise((resolve) => {
       this.auth.onAuthStateChanged(resolve)
     })
   }
-
   getCurrentUsername() {
     if (this.auth.currentUser) return this.auth.currentUser.email
     else return ''
   }
-
   async getCurrentUserInfo() {
     const info = await this.db.doc(`users/${this.auth.currentUser.uid}`).get()
 
@@ -79,6 +55,30 @@ class Firebase {
       phone: info.get('phone'),
       email: this.auth.currentUser.email,
     }
+  }
+
+  //POST EVENTS
+  addEventToUser(event) {
+    if (!this.auth.currentUser) {
+      return alert('Not authorized')
+    }
+
+    return this.db
+      .doc(`users/${this.auth.currentUser.uid}`)
+      .update({ events: app.firestore.FieldValue.arrayUnion({ ...event }) })
+  }
+  addEvent(event) {
+    return this.db.collection('events').add(event)
+  }
+
+  //QUERIES
+  async getEvents() {
+    const events = await this.db.collection('events').get()
+    let obj = []
+    events.forEach(doc => {
+        obj.push({ ...doc.data(), id: doc.id })
+    })
+    return obj
   }
 }
 
