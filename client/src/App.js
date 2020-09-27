@@ -15,8 +15,8 @@ import Header from './components/Header'
 
 import Login from './pages/Login'
 import Register from './pages/Register'
-import Home from './pages/Home'
 import EventDashboard from './pages/EventDashboard'
+import Home from './pages/Home'
 
 
 import firebase from './firebase'
